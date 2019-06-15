@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_list_or_404
+from django.http import Http404
 from django.template import loader
 
 from .models import Track
@@ -13,27 +13,27 @@ def index(request):
         'track_count': Point.objects.count(),
     }
 
-    template = loader.get_template('tracks/index.html')
-
-    return HttpResponse(template.render(context, request))
+    return render(request, 'tracks/index.html', context)
 
 
 def detail(request, track_id):
 
-    track =  Track.objects.get(id=track_id)
+    try:
+        track =  Track.objects.get(id=track_id)
+    except Track.DoesNotExist:
+        raise Http404('Track does not exist.')
 
     context = {
         'track':  track,
-        #'points2': mytrack.points,
         'points': Point.objects.filter(track=track).order_by('-id')[:50],
     }
 
-    return HttpResponse(render(request, 'tracks/detail.html', context))
+    return render(request, 'tracks/detail.html', context)
 
 def index_by_user(request, username):
 
     context = {
-        'tracks': Track.objects.filter(owner__username=username).order_by('-id')[:50],
+            'tracks': get_list_or_404(Track.objects.filter(owner__username=username).order_by('-id')[:5]),
     }
 
-    return HttpResponse(render(request, 'tracks/index.html', context))
+    return render(request, 'tracks/index.html', context)
