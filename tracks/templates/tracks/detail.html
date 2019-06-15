@@ -1,0 +1,15 @@
+<p>bH5 is tracking you.</p>
+
+<h1>{{ track }}</h1>
+
+{% if points %}
+    <ul>
+    {% for point in points %}
+        <li>{{ point }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No points in this track.</p>
+{% endif %}
+
+
