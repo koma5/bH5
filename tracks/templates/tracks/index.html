@@ -4,7 +4,7 @@
 {% if tracks %}
     <ul>
     {% for track in tracks %}
-        <li><a href="/track/{{ track.id }}">{{ track }}</a></li>
+        <li><a href="{% url 'tracks:detail' track.id %}">{{ track }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

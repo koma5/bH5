@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
-from django.http import Http404
 
 from .models import Track
 from .models import Point
