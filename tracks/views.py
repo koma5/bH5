@@ -1,6 +1,5 @@
-from django.shortcuts import render, get_list_or_404
+from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.http import Http404
-from django.template import loader
 
 from .models import Track
 from .models import Point
@@ -18,10 +17,7 @@ def index(request):
 
 def detail(request, track_id):
 
-    try:
-        track =  Track.objects.get(id=track_id)
-    except Track.DoesNotExist:
-        raise Http404('Track does not exist.')
+    track =  get_object_or_404(Track, id=track_id)
 
     context = {
         'track':  track,
