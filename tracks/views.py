@@ -2,6 +2,9 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 
 from .models import Track
 from .models import Point
+from django.http import HttpResponse
+import gpxpy
+import gpxpy.gpx
 
 def index(request):
 
@@ -13,6 +16,28 @@ def index(request):
 
     return render(request, 'tracks/index.html', context)
 
+def new_track(request):
+
+    parsed_gpx = gpxpy.parse(request.POST['raw_gpx'])
+
+    new_track = Track(
+        owner=request.user
+    )
+
+    new_track.save()
+
+    for track in parsed_gpx.tracks:
+        for segment in track.segments:
+            for point in segment.points:
+                new_point = Point()
+                new_point.latitude = point.latitude
+                new_point.longitude = point.longitude
+                new_point.date = point.time
+                new_point.track = new_track
+                new_point.save()
+
+
+    return HttpResponse('got you, ' + request.user.username)
 
 def detail(request, track_id):
 
