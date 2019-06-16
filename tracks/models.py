@@ -10,8 +10,15 @@ class Track(models.Model):
     def __str__(self):
         return "Track({})".format(self.name if self.name else self.id)
 
-class Point(models.Model):
+class Segment(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'Segment({})'.format(self.id)
+
+
+class Point(models.Model):
+    segment = models.ForeignKey(Segment, on_delete=models.CASCADE)
     latitude = models.FloatField()
     longitude = models.FloatField()
     altitude = models.FloatField(null=True, blank=True)

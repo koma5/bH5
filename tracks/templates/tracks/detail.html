@@ -2,14 +2,24 @@
 
 <h1>{{ track }}</h1>
 
-{% if points %}
+{% if segments %}
     <ul>
-    {% for point in points %}
-        <li>{{ point }}</li>
+    {% for segment in segments %}
+        <li>{{ segment.segment }}</li>
+
+        {% if segment.points %}
+            <ul>
+            {% for point in segment.points %}
+                <li>{{ point }}</li>
+            {% endfor %}
+            </ul>
+
+        {% endif %}
+
     {% endfor %}
     </ul>
 {% else %}
-    <p>No points in this track.</p>
+    <p>Empty track.</p>
 {% endif %}
 
 
