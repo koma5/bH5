@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Track
 from .models import Segment
@@ -23,6 +24,7 @@ def index(request):
 
     return render(request, 'tracks/index.html', context)
 
+@login_required(login_url='/admin')
 @require_http_methods(["POST"])
 def new_track(request):
 
