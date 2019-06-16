@@ -12,10 +12,13 @@ import gpxpy.gpx
 
 def index(request):
 
+    tracks = Track.objects.all()
+
+    if not request.user.is_authenticated:
+        tracks = Track.objects.filter(public=True)
+
     context = {
-	'tracks': Track.objects.order_by('-id')[:50],
-        'point_count': Track.objects.count(),
-        'track_count': Point.objects.count(),
+	'tracks': tracks.order_by('-id')[:50],
     }
 
     return render(request, 'tracks/index.html', context)
@@ -52,7 +55,12 @@ def new_track(request):
 
 def detail(request, track_id):
 
-    track =  get_object_or_404(Track, id=track_id)
+    tracks = Track.objects.all()
+
+    if not request.user.is_authenticated:
+        tracks = Track.objects.filter(public=True)
+
+    track =  get_object_or_404(tracks, id=track_id)
 
     context = { 'track': track, 'segments': [] }
 
@@ -68,8 +76,13 @@ def detail(request, track_id):
 
 def index_by_user(request, username):
 
+    tracks = Track.objects.all()
+
+    if not request.user.is_authenticated:
+        tracks = Track.objects.filter(public=True)
+
     context = {
-            'tracks': get_list_or_404(Track.objects.filter(owner__username=username).order_by('-id')[:5]),
+            'tracks': get_list_or_404(tracks.filter(owner__username=username).order_by('-id')[:5]),
     }
 
     return render(request, 'tracks/index.html', context)
