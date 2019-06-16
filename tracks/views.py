@@ -4,6 +4,9 @@ from .models import Track
 from .models import Segment
 from .models import Point
 from django.http import HttpResponse
+from django.core.exceptions import PermissionDenied
+from django.views.decorators.http import require_http_methods
+
 import gpxpy
 import gpxpy.gpx
 
@@ -17,7 +20,12 @@ def index(request):
 
     return render(request, 'tracks/index.html', context)
 
+@require_http_methods(["POST"])
 def new_track(request):
+
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+
 
     parsed_gpx = gpxpy.parse(request.POST['raw_gpx'])
 
