@@ -2,23 +2,21 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Track(models.Model):
-    name = models.CharField(max_length=200, blank=True)
-    date = models.DateTimeField('date_published', blank=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    date = models.DateTimeField(null=True, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    public = models.BooleanField(default=False, blank=True)
+    public = models.BooleanField(default=False)
 
     def __str__(self):
-        if self.name is '':
-            return "Track(" + str(self.id) + ')'
-        else:
-            return "Track(" + self.name + ')'
+        return "Track({})".format(self.name if self.name else self.id)
 
 class Point(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     latitude = models.FloatField()
     longitude = models.FloatField()
+    altitude = models.FloatField(null=True, blank=True)
     date = models.DateTimeField()
 
     def __str__(self):
-        return "Point(" + str(self.id) + ')'
+        return 'Point({})'.format(self.id)
 
