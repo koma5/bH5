@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_http_methods
 
+from django.db import transaction
+
 import gpxpy
 import gpxpy.gpx
 
@@ -24,6 +26,7 @@ def index(request):
 
     return render(request, 'tracks/index.html', context)
 
+@transaction.atomic
 @login_required(login_url='/admin')
 @require_http_methods(["POST"])
 def new_track(request):
