@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'tracks.apps.TracksConfig',
+    'django.contrib.gis',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,7 +77,7 @@ WSGI_APPLICATION = 'bH5.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'postgres',
         'USER': 'postgres',
         'HOST': 'db',
