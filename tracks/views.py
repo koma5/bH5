@@ -25,6 +25,7 @@ def index(request):
 
     context = {
 	'tracks': tracks.order_by('-id')[:50],
+        'loggedIn': request.user.is_authenticated
     }
 
     return render(request, 'tracks/index.html', context)
@@ -125,7 +126,8 @@ def index_by_user(request, username):
         tracks = Track.objects.filter(public=True)
 
     context = {
-            'tracks': get_list_or_404(tracks.filter(owner__username=username).order_by('-id')[:5]),
+        'tracks': get_list_or_404(tracks.filter(owner__username=username).order_by('-id')[:5]),
+        'loggedIn': request.user.is_authenticated
     }
 
     return render(request, 'tracks/index.html', context)
