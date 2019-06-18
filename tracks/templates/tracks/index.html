@@ -9,7 +9,7 @@
         {% for track in tracks %}
             <li>
                 <a href="{% url 'tracks:detail' track.id %}">{{ track }}</a><br>
-                dowload as: <a href="{% url 'tracks:get_gpx' track.id %}">gpx</a> <a href="{% url 'tracks:get_geojson' track.id %}">geojson</a>
+                dowload: <a href="{% url 'tracks:get_gpx' track.id %}">gpx</a>, <a href="{% url 'tracks:get_geojson' track.id %}">geojson</a>
             </li>
         {% endfor %}
         </ul>
