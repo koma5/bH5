@@ -8,11 +8,8 @@
         <ul>
         {% for track in tracks %}
             <li>
-                <a href="{% url 'tracks:detail' track.id %}">{{ track }}</a>
-                <ul>
-                    <li><a href="{% url 'tracks:get_gpx' track.id %}">download gpx</a></li>
-                    <li><a href="{% url 'tracks:get_geojson' track.id %}">download geojson</a></li>
-                </ul>
+                <a href="{% url 'tracks:detail' track.id %}">{{ track }}</a><br>
+                dowload as: <a href="{% url 'tracks:get_gpx' track.id %}">gpx</a> <a href="{% url 'tracks:get_geojson' track.id %}">geojson</a>
             </li>
         {% endfor %}
         </ul>
@@ -26,7 +23,7 @@
         <p>
             <form action="{% url 'tracks:new_track' %}" method="post">
             {% csrf_token %}
-                <textarea name="raw_gpx"></textarea>
+                <input type="text" placeholder="paste gpx here..." name="raw_gpx" />
                 <input type="submit" value="insert">
             </form>
         <p>
