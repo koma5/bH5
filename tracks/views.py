@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Track
 from .models import Segment
 from .models import Point
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_http_methods
 
@@ -59,7 +60,7 @@ def new_track(request):
                 new_point.save()
 
 
-    return HttpResponse('got you, ' + request.user.username)
+    return HttpResponseRedirect(reverse('tracks:detail',args=(new_track.id,)))
 
 def detail(request, track_id):
 
