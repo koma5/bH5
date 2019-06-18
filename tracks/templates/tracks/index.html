@@ -7,7 +7,12 @@
     {% if tracks %}
         <ul>
         {% for track in tracks %}
-            <li><a href="{% url 'tracks:detail' track.id %}">{{ track }}</a></li>
+            <li>
+                <a href="{% url 'tracks:detail' track.id %}">{{ track }}</a>
+                <ul>
+                    <li><a href="{% url 'tracks:get_gpx' track.id %}">download gpx</a></li>
+                </ul>
+            </li>
         {% endfor %}
         </ul>
     {% else %}
