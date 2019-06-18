@@ -13,7 +13,7 @@
 
 <h1>new track<h1>
 
-<form action="track" method="post">
+<form action="{% url 'tracks:new_track' %}" method="post">
 {% csrf_token %}
     <textarea name="raw_gpx"></textarea>
     <input type="submit" value="insert">
