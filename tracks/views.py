@@ -16,6 +16,8 @@ from django.db import transaction
 import gpxpy
 import gpxpy.gpx
 
+import json
+
 def index(request):
 
     tracks = Track.objects.all()
@@ -116,6 +118,46 @@ def get_gpx(request, track_id):
 
     return HttpResponse(gpx.to_xml(), content_type="application/gpx+xml")
     #return HttpResponse(gpx.to_xml(), content_type="text/plain")
+
+def get_geojson(request, track_id):
+
+    tracks = Track.objects.all()
+
+    if not request.user.is_authenticated:
+        tracks = Track.objects.filter(public=True)
+
+    track =  get_object_or_404(tracks, id=track_id)
+
+    geojson_object = {
+        'type': 'FeatureCollection',
+        'features': []
+    }
+
+    segments = Segment.objects.filter(track=track)
+
+
+
+    for segment in segments:
+
+        if segment.points.count() >= 2:
+
+            geojson_segment = {
+                'type': 'Feature',
+                'properties': {},
+                'geometry': {
+                    'type': 'LineString',
+                    'coordinates': []
+                }
+            }
+
+            points = Point.objects.filter(segment=segment).order_by('date')
+
+            for point in points:
+                geojson_segment['geometry']['coordinates'].append([point.longitude, point.latitude])
+
+            geojson_object['features'].append(geojson_segment)
+
+    return HttpResponse(json.dumps(geojson_object), content_type="application/geo+json")
 
 
 def index_by_user(request, username):
