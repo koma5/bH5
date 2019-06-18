@@ -1,0 +1,40 @@
+{% load static %}
+<!doctype html>
+
+<html>
+    <meta chartset="utf-8">
+    <head>
+        <title>bH5</title>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'tracks/style.css' %}">
+
+    </head>
+
+<body>
+
+    <header>
+        <p>bH5 is tracking you.</p>
+        <nav>
+            <ul>
+                <li><a href="/">home</a></li>
+                <li><a href="/admin">admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+    <footer>
+    proudly rendered by server!
+    </footer>
+
+</body>
+
+</html>
+
+

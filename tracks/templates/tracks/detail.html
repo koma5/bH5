@@ -1,25 +1,26 @@
-<p>bH5 is tracking you.</p>
+{% extends 'tracks/base.html'%}
 
-<h1>{{ track }}</h1>
+{% block content %}
+    <h1>{{ track }}</h1>
 
-{% if segments %}
-    <ul>
-    {% for segment in segments %}
-        <li>{{ segment.segment }}</li>
+    {% if segments %}
+        <ul>
+        {% for segment in segments %}
+            <li>{{ segment.segment }}</li>
 
-        {% if segment.points %}
-            <ul>
-            {% for point in segment.points %}
-                <li>{{ point }}</li>
-            {% endfor %}
-            </ul>
+            {% if segment.points %}
+                <ul>
+                {% for point in segment.points %}
+                    <li>{{ point }}</li>
+                {% endfor %}
+                </ul>
 
-        {% endif %}
+            {% endif %}
 
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Empty track.</p>
-{% endif %}
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Empty track.</p>
+    {% endif %}
 
-
+{% endblock %}
