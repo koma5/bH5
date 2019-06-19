@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg"> 
+
+{% for d in svg_path_data %}
+  <path style="fill:none;stroke:lightgreen;stroke-width:3px;"
+        d="{{ d }}"
+  />
+{% endfor %}
+</svg>

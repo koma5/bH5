@@ -57,7 +57,7 @@ def new_track(request):
                 new_point = Point()
                 new_point.latitude = point.latitude
                 new_point.longitude = point.longitude
-                new_point.point = gisPoint(point.longitude, point.latitude)
+                new_point.point = gisPoint(point.longitude, point.latitude, srid=4326)
                 new_point.date = point.time
                 new_point.segment = new_segment
                 new_point.save()
@@ -131,7 +131,7 @@ def get_svg(request, track_id):
     results = Segment.objects.raw('''
         SELECT
             seg.id,
-            ST_AsSVG(ST_MakeLine(p.point ORDER BY p.date), 4326) as svg_line
+            ST_AsSVG(ST_MakeLine(p.point ORDER BY p.date), 1) as svg_line
         FROM tracks_segment as seg
         INNER JOIN tracks_point AS p
         ON seg.id = p.segment_id
@@ -139,9 +139,11 @@ def get_svg(request, track_id):
         GROUP BY seg.id;
             ''', [track.id], {'svg_line':'svg_line'});
 
-    all_segment_paths = ' '.join([res.svg_line for res in results])
+    context = {
+        'svg_path_data': [res.svg_line for res in results]
+    }
 
-    return HttpResponse(all_segment_paths)
+    return render(request, 'tracks/track.svg', context, content_type="image/svg+xml")
 
 def get_geojson(request, track_id):
 
