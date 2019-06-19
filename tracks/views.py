@@ -119,6 +119,30 @@ def get_gpx(request, track_id):
     return HttpResponse(gpx.to_xml(), content_type="application/gpx+xml")
     #return HttpResponse(gpx.to_xml(), content_type="text/plain")
 
+def get_svg(request, track_id):
+
+    tracks = Track.objects.all()
+
+    if not request.user.is_authenticated:
+        tracks = Track.objects.filter(public=True)
+
+    track =  get_object_or_404(tracks, id=track_id)
+
+    results = Segment.objects.raw('''
+        SELECT
+            seg.id,
+            ST_AsSVG(ST_MakeLine(p.point ORDER BY p.date), 4326) as svg_line
+        FROM tracks_segment as seg
+        INNER JOIN tracks_point AS p
+        ON seg.id = p.segment_id
+        WHERE seg.track_id = %s
+        GROUP BY seg.id;
+            ''', [track.id], {'svg_line':'svg_line'});
+
+    all_segment_paths = ' '.join([res.svg_line for res in results])
+
+    return HttpResponse(all_segment_paths)
+
 def get_geojson(request, track_id):
 
     tracks = Track.objects.all()
