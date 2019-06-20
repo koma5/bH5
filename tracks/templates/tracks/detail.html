@@ -2,6 +2,9 @@
 
 {% block content %}
     <h1>{{ track.name }}</h1>
+    {% if user.is_authenticated %}
+        <a href="{% url 'admin:tracks_track_change' track.id %}">edit</a>
+    {% endif %}
     <p>
         {{ track.point_count }} point{{ track.point_count|pluralize }}
         in {{ track.segment_count }} segment{{ track.segment_count|pluralize }}
@@ -12,9 +15,12 @@
         <a href="{% url 'tracks:get_svg' track.id %}">svg</a>
     </p>
 
-    <img src="{% url 'tracks:get_svg' track.id %}" alt="svg path of the gps track" >
+
+
 
     {% if segments %}
+        <img src="{% url 'tracks:get_svg' track.id %}" alt="svg path of the gps track" >
+
         <ul>
         {% for segment in segments %}
             <li>segment {{ forloop.counter }}</li>
