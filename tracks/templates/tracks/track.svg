@@ -3,7 +3,6 @@
 {% for d in svg_path_data %}
   <path
     style="fill:red;"
-    transform="translate(-88899, 471826)"
     d="{{ d }}"/>
 {% endfor %}
 </svg>
