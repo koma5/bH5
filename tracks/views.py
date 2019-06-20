@@ -27,7 +27,8 @@ def index(request):
 
     context = {
 	'tracks': tracks.order_by('-id')[:50],
-        'loggedIn': request.user.is_authenticated
+        'loggedIn': request.user.is_authenticated,
+        'subset_name': 'latest 50 tracks',
     }
 
     return render(request, 'tracks/index.html', context)
@@ -81,7 +82,8 @@ def detail(request, track_id):
     for segment in segments:
         context['segments'].append({
             'segment': segment,
-            'points': Point.objects.filter(segment=segment).order_by('date')
+            'points': Point.objects.filter(segment=segment).order_by('date'),
+            'user': request.user,
         })
 
     return render(request, 'tracks/detail.html', context)
@@ -203,7 +205,8 @@ def index_by_user(request, username):
 
     context = {
         'tracks': get_list_or_404(tracks.filter(owner__username=username).order_by('-id')[:5]),
-        'loggedIn': request.user.is_authenticated
+        'loggedIn': request.user.is_authenticated,
+        'subset_name': 'tracks by ' + request.user.username,
     }
 
     return render(request, 'tracks/index.html', context)

@@ -1,17 +1,28 @@
 {% extends 'tracks/base.html'%}
 
 {% block content %}
-    <h1>{{ track }}</h1>
+    <h1>{{ track.name }}</h1>
+    <p>
+        {{ track.point_count }} point{{ track.point_count|pluralize }}
+        in {{ track.segment_count }} segment{{ track.segment_count|pluralize }}
+        by user <a href="{% url 'tracks:index_by_user' user.username %}">{{ user.username }}</a>
+        <br>permalink:
+        <a href="{% url 'tracks:get_gpx' track.id %}">gpx</a>,
+        <a href="{% url 'tracks:get_geojson' track.id %}">geojson</a>,
+        <a href="{% url 'tracks:get_svg' track.id %}">svg</a>
+    </p>
+
+    <img src="{% url 'tracks:get_svg' track.id %}" alt="svg path of the gps track" >
 
     {% if segments %}
         <ul>
         {% for segment in segments %}
-            <li>{{ segment.segment }}</li>
+            <li>segment {{ forloop.counter }}</li>
 
             {% if segment.points %}
                 <ul>
                 {% for point in segment.points %}
-                    <li>{{ point }}</li>
+                <li>{{ point.latitude }}, {{ point.longitude }}</li>
                 {% endfor %}
                 </ul>
 

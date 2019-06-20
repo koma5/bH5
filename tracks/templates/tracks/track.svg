@@ -2,7 +2,10 @@
 
 {% for d in svg_path_data %}
   <path
-    style="fill:red;"
+    style="
+    fill: none;
+    stroke: green;
+    stroke-width: 0.4%;"
     d="{{ d }}"/>
 {% endfor %}
 </svg>

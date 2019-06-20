@@ -2,14 +2,18 @@
 
 {% block content %}
 
-    <h1>tracks</h1>
+    <h1>{{ subset_name }}</h1>
 
     {% if tracks %}
         <ul>
         {% for track in tracks %}
             <li>
-                <a href="{% url 'tracks:detail' track.id %}">{{ track }}</a><br>
-                dowload: <a href="{% url 'tracks:get_gpx' track.id %}">gpx</a>, <a href="{% url 'tracks:get_geojson' track.id %}">geojson</a>
+                <a href="{% url 'tracks:detail' track.id %}">{{ track.name }}</a><br>
+                permalink:
+                <a href="{% url 'tracks:get_gpx' track.id %}">gpx</a>,
+                <a href="{% url 'tracks:get_geojson' track.id %}">geojson</a>,
+                <a href="{% url 'tracks:get_svg' track.id %}">svg</a>
+
             </li>
         {% endfor %}
         </ul>

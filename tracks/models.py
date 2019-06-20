@@ -37,5 +37,5 @@ class Point(models.Model):
     date = models.DateTimeField()
 
     def __str__(self):
-        return 'Point({})'.format(self.id)
+        return 'Point({}|{}|{})'.format(self.id, self.latitude, self.longitude)
 
