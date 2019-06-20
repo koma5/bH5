@@ -32,8 +32,8 @@ class Segment(models.Model):
 
 class Point(models.Model):
     segment = models.ForeignKey(Segment, on_delete=models.CASCADE, related_name='points')
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    latitude = models.DecimalField(max_digits=23, decimal_places=17)
+    longitude = models.DecimalField(max_digits=23, decimal_places=17)
     point = geomodels.PointField()
     altitude = models.FloatField(null=True, blank=True)
     date = models.DateTimeField()
