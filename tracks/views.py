@@ -58,6 +58,7 @@ def new_track(request):
                 new_point = Point()
                 new_point.latitude = point.latitude
                 new_point.longitude = point.longitude
+                new_point.altitude = point.elevation
                 new_point.point = gisPoint(point.longitude, point.latitude, srid=4326)
                 new_point.date = point.time
                 new_point.segment = new_segment
