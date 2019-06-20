@@ -1,8 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg"> 
 
 {% for d in svg_path_data %}
-  <path style="fill:none;stroke:lightgreen;stroke-width:3px;"
-        d="{{ d }}"
-  />
+  <path
+    style="fill:red;"
+    transform="translate(-88899, 471826)"
+    d="{{ d }}"/>
 {% endfor %}
 </svg>

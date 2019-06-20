@@ -131,7 +131,7 @@ def get_svg(request, track_id):
     results = Segment.objects.raw('''
         SELECT
             seg.id,
-            ST_AsSVG(ST_MakeLine(p.point ORDER BY p.date), 1) as svg_line
+            ST_AsSVG(ST_Scale(ST_MakeLine(p.point ORDER BY p.date), 10000,10000), 1, 4) as svg_line
         FROM tracks_segment as seg
         INNER JOIN tracks_point AS p
         ON seg.id = p.segment_id
