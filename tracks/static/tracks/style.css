@@ -35,6 +35,10 @@ section input {
     box-sizing: border-box; 
 }
 
+section li {
+    margin-bottom: 15px;
+}
+
 nav ul{
     list-style: none;
     padding-left: 0;
