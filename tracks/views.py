@@ -20,18 +20,35 @@ import simplejson as json
 
 def index(request):
 
-    tracks = Track.objects.all()
+    if 'lat' in request.GET.keys() and 'long' in request.GET.keys() and 'radius' in request.GET.keys():
 
-    if not request.user.is_authenticated:
-        tracks = Track.objects.filter(public=True)
+        tracks = Track.objects.raw("""
+        SELECT track.id
+        FROM tracks_track as track
+        INNER JOIN tracks_segment AS segment on segment.track_id = track.id
+        INNER JOIN tracks_point AS point on point.segment_id = segment.id
+        WHERE
+            ST_DWithin(
+                point.point::geography,
+                'Point(%s %s)'::geography,
+                %s)
+        GROUP BY track.id;
+        """, [float(request.GET['long']), float(request.GET['lat']), float(request.GET['radius'])])
+
+        subset_name = 'search'
+
+    else:
+        tracks = Track.objects.order_by('-id')[:50]
+        subset_name = 'latest 50 tracks'
 
     context = {
-	'tracks': tracks.order_by('-id')[:50],
+	'tracks': tracks,
         'loggedIn': request.user.is_authenticated,
-        'subset_name': 'latest 50 tracks',
+        'subset_name': subset_name,
     }
 
     return render(request, 'tracks/index.html', context)
+
 
 @transaction.atomic
 @login_required(login_url='/admin')
