@@ -35,7 +35,7 @@ section input {
     box-sizing: border-box; 
 }
 
-section li {
+.track_list li{
     margin-bottom: 15px;
 }
 

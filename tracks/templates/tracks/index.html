@@ -5,7 +5,7 @@
     <h1>{{ subset_name }}</h1>
 
     {% if tracks %}
-        <ul>
+        <ul class="track_list">
         {% for track in tracks %}
             <li>
                 <a href="{% url 'tracks:detail' track.id %}">{{ track.display_name }}</a><br>
