@@ -16,7 +16,7 @@ from django.db import transaction
 import gpxpy
 import gpxpy.gpx
 
-import json
+import simplejson as json
 
 def index(request):
 
