@@ -1,0 +1,5 @@
+- [ ] private tracks on index if search
+- [ ] fixed scale and missing bits of svg path.
+- [ ] how to it embed it properly?
+- [ ] fix mess in views; total refactoring necessary
+- [ ] timezones in gpx and database
