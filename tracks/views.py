@@ -222,9 +222,9 @@ def index_by_user(request, username):
         tracks = Track.objects.filter(public=True)
 
     context = {
-        'tracks': get_list_or_404(tracks.filter(owner__username=username).order_by('-id')[:5]),
+        'tracks': get_list_or_404(tracks.filter(owner__username=username).order_by('-id')),
         'loggedIn': request.user.is_authenticated,
-        'subset_name': 'tracks by ' + request.user.username,
+        'subset_name': 'tracks by ' + username,
     }
 
     return render(request, 'tracks/index.html', context)
