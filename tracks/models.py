@@ -11,6 +11,12 @@ class Track(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     public = models.BooleanField(default=False)
 
+    def display_name(self):
+        if self.name:
+            return self.name
+        else:
+            return self.id
+
     def segment_count(self):
         return self.segments.count()
 

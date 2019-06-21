@@ -1,7 +1,7 @@
 {% extends 'tracks/base.html'%}
 
 {% block content %}
-    <h1>{{ track.name }}</h1>
+    <h1>{{ track.display_name }}</h1>
     {% if user.is_authenticated %}
         <a href="{% url 'admin:tracks_track_change' track.id %}">edit</a>
     {% endif %}
