@@ -10,4 +10,4 @@ docker-compose up -d
 Don't use this. It's not stable. If you don't believe me have a look inside [bugs.md](./bugs.md)
 
 ## blauerHimmel
-Translated into English blauer Himmel means blue sky. And blue sky is best for a good GPS fix. This is no my first attempt to. Back in 2012 a few friends and me we tried to build a tracking platform [blauerHimmel](https://github.com/koma5/blauerHimmel) with arduinos GPS receivers and a lot of brute force PHP without any frameworks. This is, mockingly attempt 5  hence the name *bH5*.
+Translated into English blauer Himmel means blue sky. And blue sky is best for a good GPS fix. This was not my first attempt. Back in 2012 a few friends and me tried to build a tracking platform [blauerHimmel](https://github.com/koma5/blauerHimmel) with arduinos GPS receivers and a lot of brute force PHP without any frameworks. This is, mockingly attempt 5  hence the name *bH5*.
